@@ -23,7 +23,7 @@ defmodule Pixels.MixProject do
 
   defp package do
     %{
-      files: ["lib", "mix.exs", "*.md", "LICENSE", "VERSION"],
+      files: ["lib", "c_src/*.[ch]", "mix.exs", "*.md", "Makefile", "LICENSE", "VERSION"],
       maintainers: ["Arjan Scherpenisse"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/arjan/pixels"}
