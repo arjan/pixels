@@ -17,4 +17,12 @@ defmodule PixelsTest do
     assert 4 * 8 * 8 == byte_size(data)
     assert <<0, 0, 0, 255, 0, 0, 0, 255, _::binary>> = data
   end
+
+  test "reads a PNG buffer, RGBA" do
+    data = File.read!("test/dot.png")
+    assert {:ok, %Pixels{width: 8, height: 8, data: data}} = Pixels.read(data)
+
+    assert 4 * 8 * 8 == byte_size(data)
+    assert <<0, 0, 0, 255, 0, 0, 0, 255, _::binary>> = data
+  end
 end

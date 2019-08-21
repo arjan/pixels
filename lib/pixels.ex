@@ -6,18 +6,28 @@ defmodule Pixels do
   defstruct width: 0, height: 0, data: nil
 
   def read_file(filename) do
-    case Pixels.Nif.read_png_file(filename) do
-      {:error, 27, _message} ->
-        {:error, :invalid_format}
+    Pixels.Nif.read_png_file(filename)
+    |> process_result()
+  end
 
-      {:error, 78, _message} ->
-        {:error, :not_found}
+  def read(buffer) do
+    Pixels.Nif.read_png_buffer(buffer)
+    |> process_result()
+  end
 
-      {:error, _code, message} ->
-        raise RuntimeError, to_string(message)
+  defp process_result({:error, 27, _message}) do
+    {:error, :invalid_format}
+  end
 
-      {width, height, data} ->
-        {:ok, %Pixels{width: width, height: height, data: data}}
-    end
+  defp process_result({:error, 78, _message}) do
+    {:error, :not_found}
+  end
+
+  defp process_result({:error, _code, message}) do
+    raise RuntimeError, to_string(message)
+  end
+
+  defp process_result({width, height, data}) do
+    {:ok, %Pixels{width: width, height: height, data: data}}
   end
 end
