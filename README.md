@@ -1,8 +1,9 @@
 # Pixels
 
-NIF to read pixels from a PNG file, using libpng.
-
 [![Build Status](https://travis-ci.org/arjan/pixels.svg?branch=master)](https://travis-ci.org/arjan/pixels)
+
+Elixir NIF to read image data from PNG files.
+
 
 
 ## Installation
