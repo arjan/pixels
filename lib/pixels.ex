@@ -1,22 +1,43 @@
 defmodule Pixels do
   @moduledoc """
-  Read pixels
+  Elixir module to decode pixel data from image files.
+
+  Currently only PNG files are supported.
   """
 
   defstruct width: 0, height: 0, data: nil
 
+  @typedoc """
+  The main struct for the image data.
+
+  Contains fields `width`, `height`, and `data`; `data` is a binary
+  which contains the decoded RGBA data for the image.
+
+  """
+  @type t :: %__MODULE__{width: integer, height: integer, data: binary}
+
+  @doc """
+  Decode a PNG image from a file
+  """
+  @spec read_file(filename :: String.t()) ::
+          {:ok, Pixels.t()} | {:error, :not_found} | {:error, :invalid_data}
   def read_file(filename) do
     Pixels.Nif.read_png_file(filename)
     |> process_result()
   end
 
+  @doc """
+  Decode a PNG image from raw binary input data
+  """
+  @spec read(data :: binary()) ::
+          {:ok, Pixels.t()} | {:error, :invalid_data}
   def read(buffer) do
     Pixels.Nif.read_png_buffer(buffer)
     |> process_result()
   end
 
   defp process_result({:error, 27, _message}) do
-    {:error, :invalid_format}
+    {:error, :invalid_data}
   end
 
   defp process_result({:error, 78, _message}) do

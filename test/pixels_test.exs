@@ -8,7 +8,7 @@ defmodule PixelsTest do
 
   test "file invalid" do
     File.write!("/tmp/t", "asdf")
-    assert {:error, :invalid_format} = Pixels.read_file("/tmp/t")
+    assert {:error, :invalid_data} = Pixels.read_file("/tmp/t")
   end
 
   test "reads a PNG file, RGBA" do

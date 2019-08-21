@@ -2,10 +2,6 @@ defmodule Pixels.MixProject do
   use Mix.Project
 
   def project do
-    # for {k, v} <- System.get_env() do
-    #   IO.puts "#{k} - #{v}"
-    # end
-
     [
       app: :pixels,
       compilers: [:elixir_make] ++ Mix.compilers(),
@@ -26,7 +22,8 @@ defmodule Pixels.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:elixir_make, "~> 0.6.0", runtime: false}
+      {:elixir_make, "~> 0.6.0", runtime: false},
+      {:ex_doc, "~> 0.21", runtime: false, only: :dev}
     ]
   end
 end
