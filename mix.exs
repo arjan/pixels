@@ -5,7 +5,7 @@ defmodule Pixels.MixProject do
     [
       app: :pixels,
       compilers: [:elixir_make] ++ Mix.compilers(),
-      version: "0.1.0",
+      version: File.read!("VERSION"),
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       deps: deps()
