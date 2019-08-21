@@ -2,6 +2,10 @@
 
 NIF to read pixels from a PNG file, using libpng.
 
+[![Build Status](https://travis-ci.org/arjan/pixels.svg?branch=master)](https://travis-ci.org/arjan/pixels)
+[![Hex pm](http://img.shields.io/hexpm/v/pixels.svg?style=flat)](https://hex.pm/packages/pixels)
+
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
