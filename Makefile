@@ -1,3 +1,8 @@
+LIB := pixels_nif
+
+ifeq ($(ERL_EI_INCLUDE_DIR),)
+   $(error Please run 'mix compile' instead of 'make')
+endif
 
 # Check that we're on a supported build platform
 ifeq ($(CROSSCOMPILE),)
@@ -10,39 +15,33 @@ else
 	BUILD := $(shell basename $(CROSSCOMPILE))
 endif
 
-DEPS := $(PWD)/_build/_ext/$(BUILD)
-
 SOURCES := $(wildcard c_src/*.c)
 SOURCES := $(SOURCES:.c=.o)
 
-all: nif
-
-ERLANG_PATH = $(shell erl -eval 'io:format("~s", [lists:concat([code:root_dir(), "/erts-", erlang:system_info(version), "/include"])])' -s init stop -noshell)
-NIF_CFLAGS = -g -O3  -I"$(ERLANG_PATH)" -I"$(LIB_DIR)" -I"$(DEPS)/include"
+CFLAGS += -g -O3  -I"$(ERTS_INCLUDE_DIR)"
 
 ifeq ($(shell uname),Linux)
-	NIF_LDFLAGS += -Wl,--no-whole-archive
+	LDFLAGS += -Wl,--no-whole-archive
 endif
 
-LIB = pixels_nif
-LIB_DIR = $(PWD)/priv
-OUTPUT = "$(LIB_DIR)"/$(LIB).so
-
 ifneq ($(OS),Windows_NT)
-	NIF_CFLAGS += -fPIC
+	CFLAGS += -fPIC
 endif
 
 ifeq ($(shell uname),Darwin)
-	NIF_LDFLAGS += -dynamiclib -undefined dynamic_lookup
+	LDFLAGS += -dynamiclib -undefined dynamic_lookup
 endif
 
+###
+
+all: $(LIB)
 
 clean:
 	@$(RM) -r c_src/*.o "$(LIB_DIR)"/$(LIB).so* $(DEPS)
 
 %.o: %.c
-	$(CC) -c $(NIF_CFLAGS) -o $@ $<
+	$(CC) -c $(CFLAGS) -o $@ $<
 
-nif: $(SOURCES)
-	@mkdir -p $(LIB_DIR) || :
-	$(CC) $^ $(NIF_LDFLAGS) -shared -o $(OUTPUT)
+$(LIB): $(SOURCES)
+	@mkdir -p $(MIX_APP_PATH)/priv || :
+	$(CC) $^ $(LDFLAGS) -shared -o $(MIX_APP_PATH)/priv/$(LIB).so
