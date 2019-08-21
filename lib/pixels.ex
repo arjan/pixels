@@ -3,16 +3,21 @@ defmodule Pixels do
   Read pixels
   """
 
-  defstruct width: 0, height: 0, format: nil, data: nil
+  defstruct width: 0, height: 0, data: nil
 
   def read_file(filename) do
-    with {width, height, format, data} <- Pixels.Nif.read_png_file(filename) do
-      {:ok, %Pixels{width: width, height: height, format: map_format(format), data: data}}
-    else
-      reason -> {:error, reason}
+    case Pixels.Nif.read_png_file(filename) do
+      {:error, 27, _message} ->
+        {:error, :invalid_format}
+
+      {:error, 78, _message} ->
+        {:error, :not_found}
+
+      {:error, _code, message} ->
+        raise RuntimeError, to_string(message)
+
+      {width, height, data} ->
+        {:ok, %Pixels{width: width, height: height, data: data}}
     end
   end
-
-  defp map_format(2), do: :rgb
-  defp map_format(6), do: :rgba
 end

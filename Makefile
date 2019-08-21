@@ -12,20 +12,13 @@ endif
 
 DEPS := $(PWD)/_build/_ext/$(BUILD)
 
-include external.mk
+SOURCES := $(wildcard c_src/*.c)
+SOURCES := $(SOURCES:.c=.o)
 
-all: prepare-deps libpng nif
-
-prepare-deps:
-	@mkdir -p $(DEPS)
-
-libpng_url := "http://prdownloads.sourceforge.net/libpng/libpng-1.6.37.tar.gz?download"
-libpng_tar := libpng-1.6.37.tar.gz
-libpng_vsn := 1.6.37
+all: nif
 
 ERLANG_PATH = $(shell erl -eval 'io:format("~s", [lists:concat([code:root_dir(), "/erts-", erlang:system_info(version), "/include"])])' -s init stop -noshell)
 NIF_CFLAGS = -g -O3  -I"$(ERLANG_PATH)" -I"$(LIB_DIR)" -I"$(DEPS)/include"
-NIF_LDFLAGS += -lpng
 
 ifeq ($(shell uname),Linux)
 	NIF_LDFLAGS += -Wl,--no-whole-archive
@@ -45,8 +38,11 @@ endif
 
 
 clean:
-	@$(RM) -r "$(LIB_DIR)"/$(LIB).so* zlib* libpng* $(DEPS)
+	@$(RM) -r c_src/*.o "$(LIB_DIR)"/$(LIB).so* $(DEPS)
 
-nif:
+%.o: %.c
+	$(CC) -c $(NIF_CFLAGS) -o $@ $<
+
+nif: $(SOURCES)
 	@mkdir -p $(LIB_DIR) || :
-	@$(CC) $(NIF_CFLAGS) -shared $(NIF_LDFLAGS) -o $(OUTPUT) c_src/$(LIB).c
+	$(CC) $^ $(NIF_LDFLAGS) -shared -o $(OUTPUT)

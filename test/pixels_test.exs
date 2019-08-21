@@ -11,18 +11,10 @@ defmodule PixelsTest do
     assert {:error, :invalid_format} = Pixels.read_file("/tmp/t")
   end
 
-  test "reads a RGB file" do
-    assert {:ok, %Pixels{width: 8, height: 8, format: :rgb, data: data}} =
-             Pixels.read_file("test/dot.png")
-
-    assert 3 * 8 * 8 == byte_size(data)
-    assert <<0, 0, 0, _::binary>> = data
-  end
-
-  test "reads a RGBA file" do
-    assert {:ok, %Pixels{width: 8, height: 8, format: :rgba, data: data}} =
-             Pixels.read_file("test/dot_rgba.png")
+  test "reads a PNG file, RGBA" do
+    assert {:ok, %Pixels{width: 8, height: 8, data: data}} = Pixels.read_file("test/dot.png")
 
     assert 4 * 8 * 8 == byte_size(data)
+    assert <<0, 0, 0, 255, 0, 0, 0, 255, _::binary>> = data
   end
 end
