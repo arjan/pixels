@@ -38,14 +38,14 @@ ERL_NIF_TERM read_png_file(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[]) 
         return enif_make_badarg(env);
     }
 
-    unsigned error;
-    unsigned width = 0, height = 0;
-    unsigned char* image_data = 0;
-
     char filename[1000];
 
     strncpy(filename, binary.data, binary.size);
     filename[binary.size] = 0;
+
+    unsigned error;
+    unsigned width = 0, height = 0;
+    unsigned char* image_data = 0;
 
     error = lodepng_decode32_file(&image_data, &width, &height, filename);
     return _png_result(env, error, image_data, width, height);

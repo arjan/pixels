@@ -14,4 +14,8 @@ defmodule Pixels.Nif do
   def read_png_buffer(_buffer) do
     raise "NIF read_png_buffer/1 not implemented"
   end
+
+  def read_jpeg_file(_filename) do
+    raise "NIF read_jpeg_file/1 not implemented"
+  end
 end
