@@ -7,15 +7,11 @@ defmodule Pixels.Nif do
     :ok = :erlang.load_nif(file, 0)
   end
 
-  def read_png_file(_filename) do
-    raise "NIF read_png_file/1 not implemented"
+  def decode_png(_data) do
+    raise "NIF decode_png/1 not implemented"
   end
 
-  def read_png_buffer(_buffer) do
-    raise "NIF read_png_buffer/1 not implemented"
-  end
-
-  def read_jpeg_file(_filename) do
-    raise "NIF read_jpeg_file/1 not implemented"
+  def decode_jpeg(_data) do
+    raise "NIF decode_jpeg/1 not implemented"
   end
 end

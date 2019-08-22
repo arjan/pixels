@@ -3,7 +3,7 @@ defmodule PixelsTest do
   doctest Pixels
 
   test "file not found" do
-    assert {:error, :not_found} = Pixels.read_file("test/fxxx.png")
+    assert {:error, :enoent} = Pixels.read_file("test/fxxx.png")
   end
 
   test "file invalid" do

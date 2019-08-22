@@ -258,7 +258,7 @@ static ERL_NIF_TERM _jpeg_result(ErlNifEnv *env, uint8 *image_data, int width, i
         );
 }
 
-ERL_NIF_TERM read_jpeg_file(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[]) {
+ERL_NIF_TERM decode_jpeg(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[]) {
     ErlNifBinary binary;
 
     if (!enif_inspect_iolist_as_binary(env, argv[0], &binary)) {

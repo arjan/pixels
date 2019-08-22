@@ -4,9 +4,8 @@
 // Let's define the array of ErlNifFunc beforehand:
 static ErlNifFunc nif_funcs[] = {
     // {erl_function_name, erl_function_arity, c_function}
-    {"read_png_file", 1, read_png_file},
-    {"read_png_buffer", 1, read_png_buffer},
-    {"read_jpeg_file", 1, read_jpeg_file}
+    {"decode_png", 1, decode_png},
+    {"decode_jpeg", 1, decode_jpeg}
 };
 
 ERL_NIF_INIT(Elixir.Pixels.Nif, nif_funcs, NULL, NULL, NULL, NULL)

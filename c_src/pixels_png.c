@@ -30,28 +30,7 @@ static ERL_NIF_TERM _png_result(ErlNifEnv *env, unsigned error, unsigned char *i
         );
 }
 
-
-ERL_NIF_TERM read_png_file(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[]) {
-    ErlNifBinary binary;
-
-    if (!enif_inspect_iolist_as_binary(env, argv[0], &binary)) {
-        return enif_make_badarg(env);
-    }
-
-    char filename[1000];
-
-    strncpy(filename, binary.data, binary.size);
-    filename[binary.size] = 0;
-
-    unsigned error;
-    unsigned width = 0, height = 0;
-    unsigned char* image_data = 0;
-
-    error = lodepng_decode32_file(&image_data, &width, &height, filename);
-    return _png_result(env, error, image_data, width, height);
-}
-
-ERL_NIF_TERM read_png_buffer(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[]) {
+ERL_NIF_TERM decode_png(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[]) {
     ErlNifBinary binary;
 
     if (!enif_inspect_iolist_as_binary(env, argv[0], &binary)) {

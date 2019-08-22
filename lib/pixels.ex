@@ -20,10 +20,12 @@ defmodule Pixels do
   Decode a PNG image from a file
   """
   @spec read_file(filename :: String.t()) ::
-          {:ok, Pixels.t()} | {:error, :not_found} | {:error, :invalid_data}
+          {:ok, Pixels.t()} | {:error, :enoent} | {:error, :invalid_data}
   def read_file(filename) do
-    Pixels.Nif.read_png_file(filename)
-    |> process_result()
+    with {:ok, data} <- File.read(filename) do
+      Pixels.Nif.decode_png(data)
+      |> process_result()
+    end
   end
 
   @doc """
@@ -31,17 +33,13 @@ defmodule Pixels do
   """
   @spec read(data :: binary()) ::
           {:ok, Pixels.t()} | {:error, :invalid_data}
-  def read(buffer) do
-    Pixels.Nif.read_png_buffer(buffer)
+  def read(data) do
+    Pixels.Nif.decode_png(data)
     |> process_result()
   end
 
   defp process_result({:error, 27, _message}) do
     {:error, :invalid_data}
-  end
-
-  defp process_result({:error, 78, _message}) do
-    {:error, :not_found}
   end
 
   defp process_result({:error, _code, message}) do

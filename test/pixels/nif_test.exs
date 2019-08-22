@@ -3,6 +3,7 @@ defmodule Pixels.NifTest do
 
   test "read_jpeg_file" do
     s = 8 * 8 * 4 * 8
-    assert {8, 8, <<_::size(s)>>} = Pixels.Nif.read_jpeg_file("test/dot.jpg")
+    data = File.read!("test/dot.jpg")
+    assert {8, 8, <<_::size(s)>>} = Pixels.Nif.decode_jpeg(data)
   end
 end
