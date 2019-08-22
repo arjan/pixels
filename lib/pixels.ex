@@ -17,7 +17,7 @@ defmodule Pixels do
   @type t :: %__MODULE__{width: integer, height: integer, data: binary}
 
   @doc """
-  Decode a PNG image from a file
+  Decode a PNG or JPEG image from a file.
   """
   @spec read_file(filename :: String.t()) ::
           {:ok, Pixels.t()} | {:error, :enoent} | {:error, :invalid_data}
@@ -28,7 +28,7 @@ defmodule Pixels do
   end
 
   @doc """
-  Decode a PNG image from raw binary input data
+  Decode a PNG or JPEG image from raw binary input data.
   """
   @spec read(data :: binary()) ::
           {:ok, Pixels.t()} | {:error, :invalid_data}

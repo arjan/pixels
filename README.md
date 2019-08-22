@@ -2,8 +2,17 @@
 
 [![Build Status](https://travis-ci.org/arjan/pixels.svg?branch=master)](https://travis-ci.org/arjan/pixels)
 
-Elixir NIF to read image data from PNG files.
+Elixir NIF to read image data from PNG and JPEG files.
 
+For PNG images, it uses the [lodepng][lodepng] C library.
+
+For JPEG images, it uses the
+[ujpeg][ujpeg] C
+library. Progressive or lossless JPEG files are not supported by this
+library.
+
+[lodepng]: https://lodev.org/lodepng/
+[ujpeg]: https://svn.emphy.de/nanojpeg/trunk/ujpeg/
 
 
 ## Installation
