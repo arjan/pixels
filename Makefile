@@ -15,7 +15,7 @@ else
 	BUILD := $(shell basename $(CROSSCOMPILE))
 endif
 
-SOURCES := $(wildcard c_src/*.c)
+SOURCES := $(wildcard c_src/*.c c_src/ext/*.c)
 SOURCES := $(SOURCES:.c=.o)
 
 CFLAGS += -g -O3  -I"$(ERTS_INCLUDE_DIR)"

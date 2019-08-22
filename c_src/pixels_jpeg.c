@@ -7,7 +7,7 @@
 #endif
 
 #include "erl_nif.h"
-#include "picojpeg.h"
+#include "ext/picojpeg.h"
 
 typedef unsigned char uint8;
 

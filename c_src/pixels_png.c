@@ -1,6 +1,6 @@
 #include "erl_nif.h"
 #include <string.h>
-#include "lodepng.h"
+#include "ext/lodepng.h"
 
 static ERL_NIF_TERM _png_result(ErlNifEnv *env, unsigned error, unsigned char *image_data, unsigned width, unsigned height) {
 
