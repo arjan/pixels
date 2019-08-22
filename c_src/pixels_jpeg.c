@@ -49,25 +49,20 @@ ERL_NIF_TERM decode_jpeg(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[]) {
 
     bindata_buf = enif_make_new_binary(env, width * height * 4, &bindata_term);
 
-    if (ujIsColor(uj)) {
-        // RGB -> RGBA
-        for (int y=0; y<height; y++) {
-            for (int x=0; x<width; x++) {
-                bindata_buf[y * width + x * 4 + 0] = image_data[y * width + x * 3 + 0];
-                bindata_buf[y * width + x * 4 + 1] = image_data[y * width + x * 3 + 1];
-                bindata_buf[y * width + x * 4 + 2] = image_data[y * width + x * 3 + 2];
-                bindata_buf[y * width + x * 4 + 3] = 255;
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (ujIsColor(uj)) {
+                // RGB -> RGBA
+                bindata_buf[y * width * 4 + x * 4 + 0] = image_data[y * width * 3 + x * 3 + 0];
+                bindata_buf[y * width * 4 + x * 4 + 1] = image_data[y * width * 3 + x * 3 + 1];
+                bindata_buf[y * width * 4 + x * 4 + 2] = image_data[y * width * 3 + x * 3 + 2];
+            } else {
+                // Gray -> RGBA
+                bindata_buf[y * width * 4 + x * 4 + 0] = image_data[y * width + x];
+                bindata_buf[y * width * 4 + x * 4 + 1] = image_data[y * width + x];
+                bindata_buf[y * width * 4 + x * 4 + 2] = image_data[y * width + x];
             }
-        }
-    } else {
-        // Gray -> RGBA
-        for (int y=0; y<height; y++) {
-            for (int x=0; x<width; x++) {
-                bindata_buf[y * width + x * 4 + 0] = image_data[y * width + x];
-                bindata_buf[y * width + x * 4 + 1] = image_data[y * width + x];
-                bindata_buf[y * width + x * 4 + 2] = image_data[y * width + x];
-                bindata_buf[y * width + x * 4 + 3] = 255;
-            }
+            bindata_buf[y * width * 4 + x * 4 + 3] = 255;
         }
     }
 

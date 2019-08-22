@@ -28,12 +28,9 @@ defmodule PixelsTest do
 
     assert 4 * 8 * 8 == byte_size(data)
 
-    data
-    |> Base.encode16()
-    |> String.to_charlist()
-    |> Enum.chunk_every(8)
-    |> IO.inspect(label: "x")
-
-    assert <<0, 0, 0, 255, 0, 0, 0, 255, _::binary>> = data
+    assert <<r1, g1, b1, 255, _r2, _g2, _b2, 255, _::binary>> = data
+    assert r1 < 10
+    assert g1 < 10
+    assert b1 < 10
   end
 end
