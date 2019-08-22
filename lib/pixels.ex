@@ -23,8 +23,7 @@ defmodule Pixels do
           {:ok, Pixels.t()} | {:error, :enoent} | {:error, :invalid_data}
   def read_file(filename) do
     with {:ok, data} <- File.read(filename) do
-      Pixels.Nif.decode_png(data)
-      |> process_result()
+      read(data)
     end
   end
 
@@ -34,8 +33,21 @@ defmodule Pixels do
   @spec read(data :: binary()) ::
           {:ok, Pixels.t()} | {:error, :invalid_data}
   def read(data) do
-    Pixels.Nif.decode_png(data)
+    case Pixels.Identify.identify(data) do
+      :jpeg ->
+        Pixels.Nif.decode_jpeg(data)
+
+      :png ->
+        Pixels.Nif.decode_png(data)
+
+      :unknown ->
+        {:error, :invalid_data}
+    end
     |> process_result()
+  end
+
+  defp process_result({:error, reason}) do
+    {:error, reason}
   end
 
   defp process_result({:error, 27, _message}) do

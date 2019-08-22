@@ -11,18 +11,29 @@ defmodule PixelsTest do
     assert {:error, :invalid_data} = Pixels.read_file("/tmp/t")
   end
 
-  test "reads a PNG file, RGBA" do
-    assert {:ok, %Pixels{width: 8, height: 8, data: data}} = Pixels.read_file("test/dot.png")
-
-    assert 4 * 8 * 8 == byte_size(data)
-    assert <<0, 0, 0, 255, 0, 0, 0, 255, _::binary>> = data
+  test "reads a PNG file" do
+    test_dot("test/images/dot.png")
   end
 
-  test "reads a PNG buffer, RGBA" do
-    data = File.read!("test/dot.png")
-    assert {:ok, %Pixels{width: 8, height: 8, data: data}} = Pixels.read(data)
+  test "reads a mono JPG file" do
+    test_dot("test/images/dot.jpg")
+  end
+
+  test "reads a RGB JPG file" do
+    test_dot("test/images/dot_rgb.jpg")
+  end
+
+  defp test_dot(filename) do
+    assert {:ok, %Pixels{width: 8, height: 8, data: data}} = Pixels.read_file(filename)
 
     assert 4 * 8 * 8 == byte_size(data)
+
+    data
+    |> Base.encode16()
+    |> String.to_charlist()
+    |> Enum.chunk_every(8)
+    |> IO.inspect(label: "x")
+
     assert <<0, 0, 0, 255, 0, 0, 0, 255, _::binary>> = data
   end
 end
