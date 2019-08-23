@@ -1,6 +1,7 @@
 # Pixels
 
 [![Build Status](https://travis-ci.org/arjan/pixels.svg?branch=master)](https://travis-ci.org/arjan/pixels)
+[![Hex pm](https://img.shields.io/hexpm/v/pixels.svg?style=flat)](https://hex.pm/packages/pixels)
 
 Elixir NIF to read image data from PNG and JPEG files.
 
