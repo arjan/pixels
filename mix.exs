@@ -13,7 +13,8 @@ defmodule Pixels.MixProject do
       source_url: "https://github.com/arjan/pixels",
       homepage_url: "https://github.com/arjan/pixels",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      make_clean: ["clean"]
     ]
   end
 

@@ -1,4 +1,4 @@
-LIB := pixels_nif
+NIF := pixels_nif
 
 ifeq ($(ERL_EI_INCLUDE_DIR),)
    $(error Please run 'mix compile' instead of 'make')
@@ -15,8 +15,9 @@ else
 	BUILD := $(shell basename $(CROSSCOMPILE))
 endif
 
+LIB := $(MIX_APP_PATH)/priv/$(NIF).so
 SOURCES := $(wildcard c_src/*.c c_src/ext/*.c)
-SOURCES := $(SOURCES:.c=.o)
+OBJECTS := $(SOURCES:.c=.o)
 
 CFLAGS += -g -O3  -I"$(ERTS_INCLUDE_DIR)"
 
@@ -37,11 +38,11 @@ endif
 all: $(LIB)
 
 clean:
-	@$(RM) -r c_src/*.o "$(LIB_DIR)"/$(LIB).so* $(DEPS)
+	@$(RM) -f $(OBJECTS) $(LIB)
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) -o $@ $<
 
-$(LIB): $(SOURCES)
+$(LIB): $(OBJECTS)
 	@mkdir -p $(MIX_APP_PATH)/priv || :
-	$(CC) $^ $(LDFLAGS) -shared -o $(MIX_APP_PATH)/priv/$(LIB).so
+	$(CC) $^ $(LDFLAGS) -shared -o $(LIB)
