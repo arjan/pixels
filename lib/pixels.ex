@@ -46,6 +46,10 @@ defmodule Pixels do
     |> process_result()
   end
 
+  def encode_png(%Pixels{} = pixels) do
+    Pixels.Nif.encode_png(pixels.data, pixels.width, pixels.height)
+  end
+
   defp process_result({:error, reason}) do
     {:error, reason}
   end

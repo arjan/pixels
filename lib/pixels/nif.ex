@@ -11,6 +11,10 @@ defmodule Pixels.Nif do
     raise "NIF decode_png/1 not implemented"
   end
 
+  def encode_png(_data, _width, _height) do
+    raise "NIF encode_png/1 not implemented"
+  end
+
   def decode_jpeg(_data) do
     raise "NIF decode_jpeg/1 not implemented"
   end

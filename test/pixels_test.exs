@@ -23,6 +23,20 @@ defmodule PixelsTest do
     test_dot("test/images/dot_rgb.jpg")
   end
 
+  test "encode a PNG" do
+    pixels = %Pixels{
+      width: 2,
+      height: 2,
+      data: <<255, 255, 255, 255, 0, 0, 0, 255, 255, 255, 255, 255, 0, 0, 0, 255>>
+    }
+
+    assert {:ok, data} = Pixels.encode_png(pixels)
+
+    assert :png = Pixels.Identify.identify(data)
+
+    assert {:ok, pixels} == Pixels.read(data)
+  end
+
   defp test_dot(filename) do
     assert {:ok, %Pixels{width: 8, height: 8, data: data}} = Pixels.read_file(filename)
 

@@ -3,18 +3,16 @@
 [![Build Status](https://travis-ci.org/arjan/pixels.svg?branch=master)](https://travis-ci.org/arjan/pixels)
 [![Hex pm](https://img.shields.io/hexpm/v/pixels.svg?style=flat)](https://hex.pm/packages/pixels)
 
-Elixir NIF to read image data from PNG and JPEG files.
+Elixir NIF to read and write image data from/to PNG and JPEG files.
 
-For PNG images, it uses the [lodepng][lodepng] C library.
+For PNG images, it uses the [lodepng][lodepng] C library; for JPEG
+images, it uses the [ujpeg][ujpeg] C library.
 
-For JPEG images, it uses the
-[ujpeg][ujpeg] C
-library. Progressive or lossless JPEG files are not supported by this
-library.
+> Progressive or lossless JPEG files are not supported by ujpeg.
+> JPEG encoding not yet supported
 
 [lodepng]: https://lodev.org/lodepng/
 [ujpeg]: https://svn.emphy.de/nanojpeg/trunk/ujpeg/
-
 
 ## Installation
 

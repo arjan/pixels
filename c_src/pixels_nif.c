@@ -5,6 +5,7 @@
 static ErlNifFunc nif_funcs[] = {
     // {erl_function_name, erl_function_arity, c_function}
     {"decode_png", 1, decode_png},
+    {"encode_png", 3, encode_png},
     {"decode_jpeg", 1, decode_jpeg}
 };
 
