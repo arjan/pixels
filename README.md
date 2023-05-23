@@ -28,7 +28,7 @@ x = 10
 y = 3
 
 # calculate offset into `pixels.data`
-offset = y * pixels.width + x
+offset = (y * pixels.width + x) * 4
 
 # binary-pattern-match the pixel value in the data:
 <<_::binary-size(offset), r, g, b, alpha, _::binary>> = pixels.data
