@@ -1,6 +1,6 @@
 # Pixels
 
-[![Build Status](https://travis-ci.org/arjan/pixels.svg?branch=master)](https://travis-ci.org/arjan/pixels)
+[![Elixir CI](https://github.com/arjan/pixels/actions/workflows/elixir.yml/badge.svg)](https://github.com/arjan/pixels/actions/workflows/elixir.yml)
 [![Hex pm](https://img.shields.io/hexpm/v/pixels.svg?style=flat)](https://hex.pm/packages/pixels)
 
 Elixir NIF to read and write image data from/to PNG and JPEG files.
