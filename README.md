@@ -8,8 +8,7 @@ Elixir NIF to read and write image data from/to PNG and JPEG files.
 For PNG images, it uses the [lodepng][lodepng] C library; for JPEG
 images, it uses the [ujpeg][ujpeg] C library.
 
-> Progressive or lossless JPEG files are not supported by ujpeg.
-> JPEG encoding not yet supported
+> Progressive or lossless JPEG files, as well as JPEG encoding are not supported by the underlying uJpeg.
 
 [lodepng]: https://lodev.org/lodepng/
 [ujpeg]: https://svn.emphy.de/nanojpeg/trunk/ujpeg/
