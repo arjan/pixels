@@ -13,6 +13,27 @@ images, it uses the [ujpeg][ujpeg] C library.
 [lodepng]: https://lodev.org/lodepng/
 [ujpeg]: https://svn.emphy.de/nanojpeg/trunk/ujpeg/
 
+## Getting Pixel data
+
+`Pixels.read` and `Pixels.read_file` allow you to decode a PNG / JPEG file into
+a `%Pixels{}` struct. The `data` component of this struct contains the RGBA data
+of the image, in row order. To get an individual pixel's value, you can
+calculate an offset into this data based on the x/y coordinate. For example:
+
+```elixir
+{:ok, pixels} = Pixels.read_file("test.png")
+
+# the pixel value you want to get:
+x = 10
+y = 3
+
+# calculate offset into `pixels.data`
+offset = y * pixels.width + x
+
+# binary-pattern-match the pixel value in the data:
+<<_::binary-size(offset), r, g, b, alpha, _::binary>> = pixels.data
+```
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
