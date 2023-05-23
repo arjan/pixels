@@ -34,6 +34,12 @@ offset = y * pixels.width + x
 <<_::binary-size(offset), r, g, b, alpha, _::binary>> = pixels.data
 ```
 
+## I need feature X!
+
+Pull requests welcome! For a more feature-complete library you could also use
+[image](https://hex.pm/packages/image), however its license is LGPL so a bit
+more restrictive than the MIT license of Pixels.
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
